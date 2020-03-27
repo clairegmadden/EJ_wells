@@ -1,0 +1,58 @@
+---
+title: "EJ_wells_CV"
+author: "Claire Madden"
+date: "3/26/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
+
+library(tidyverse)
+library(maptools)
+library(ggspatial)
+library(tmap)
+library(sf)
+library(ggrepel)
+library(RColorBrewer)
+```
+
+
+
+
+```{r}
+
+dry_wells <- read_sf("All_drywells.shp") %>% 
+  st_transform(crs = 4326) # set projection
+
+ces <- read_sf("CESsimple.shp")%>% 
+  st_transform(crs = 4326) # redefine projection 
+
+ca <- read_sf("California.shp")%>% 
+  st_transform(crs = 4326) 
+
+cv <- read_sf("SGMA_Dissolved_Central_Valley.shp")%>% 
+  st_transform(crs = 4326)
+
+
+
+ggplot(data = ces)+
+  geom_sf()
+# check that ces maps correctly
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
