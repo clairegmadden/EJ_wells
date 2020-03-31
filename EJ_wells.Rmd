@@ -17,12 +17,16 @@ library(tmap)
 library(sf)
 library(ggrepel)
 library(RColorBrewer)
+library(stringr)
+library(janitor)
 ```
 
 
 
 
 ```{r}
+
+all_wells <- read_csv("OSWCR.csv")
 
 dry_wells <- read_sf("All_drywells.shp") %>% 
   st_transform(crs = 4326) # set projection
@@ -47,6 +51,20 @@ ggplot(data = ces)+
 ```
 
 
+```{r}
+
+# get a clean and simple version of domestic well locations ready to turn into spatial data
+
+dom_wells <- all_wells %>% 
+  select(WCRNumber, DecimalLatitude, DecimalLongitude, PlannedUseFormerUse) %>% 
+  clean_names() %>% 
+  mutate(use = str_to_lower(planned_use_former_use)) %>% 
+  filter(str_detect(use, "domestic")) %>% 
+  select(-planned_use_former_use) %>% 
+  drop_na(decimal_latitude)
+
+
+```
 
 
 
